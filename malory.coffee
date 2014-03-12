@@ -9,12 +9,12 @@ malory = (config) ->
       worker.addEventListener("message", listen)
       worker.postMessage(message)
       listen = (e) ->
-        if (e.data.demand === message.demand)
+        if (e.data.demand == message.demand)
           worker.removeEventListener("message", listen)
           resolve e.data
   
   initializeWorker = (configEntry) ->
-    worker = new worker(configEntry.workerUrl)
+    worker = new Worker(configEntry.workerUrl)
     workers[configEntry.name + '-' + configEntry.counter] = worker
     message =
       demand: configEntry.initialDemand
