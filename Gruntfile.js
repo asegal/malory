@@ -16,7 +16,7 @@ module.exports = function(grunt) {
     },
     watch: {
       dev: {
-        files: 'mallory.coffee',
+        files: 'malory.coffee',
         tasks: ['default'],
         options: {
           interrupt: true
