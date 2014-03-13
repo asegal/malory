@@ -22,7 +22,7 @@ module.exports = function(grunt) {
     watch: {
       dev: {
         files: 'malory.coffee',
-        tasks: ['dev'],
+        tasks: ['default'],
         options: {
           interrupt: true
         }
@@ -39,7 +39,7 @@ module.exports = function(grunt) {
   });
 
   // Default task.
-  grunt.registerTask('dev', ['default', 'watch:dev']);
   grunt.registerTask('default', ['clean', 'coffee']);
+  grunt.registerTask('dev', ['default', 'watch:dev']);
 
 };
