@@ -1,0 +1,44 @@
+<head>
+  <!-- Vendor -->
+  <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+  <script src="http://www.promisejs.org/implementations/q/q-0.9.6.js"></script>
+
+  <!-- Hummingbird -->
+  <script src="../malory.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript" charset="utf-8">
+
+  var config;
+
+  config = [
+    {
+      workerUrl: "worker.js",
+      initialDemand: "getCms",
+      budgetedWorkers: 50,
+      officiallyOutOfMemory: "officiallyOutOfMemory"},{
+      workerUrl: "worker.js",
+      initialDemand: "getLeads",
+      budgetedWorkers: 50,
+      officiallyOutOfMemory: "officiallyOutOfMemory"
+    }
+  ];
+
+   $(document).ready(function () {
+
+     var isisCeo;
+
+     isisCeo = new malory(config);
+
+     isisCeo.demand('gin').then(function(data) {
+       var datum, _i, _len, _results;
+       _results = [];
+       for (_i = 0, _len = data.length; _i < _len; _i++) {
+         datum = data[_i];
+         _results.push(console.log('... and freshly squeezed limes'));
+         }
+         return _results;
+       })
+     })
+
+ </script>
+</body>
