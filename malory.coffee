@@ -36,9 +36,12 @@ malory = (config) ->
       initializeWorker configEntry
 
   # Send message to all workers, returns a promise, which will return an array containg each workers response as the index values
-  machinations.demand = (message) ->
+  machinations.demand = (demand, workerArguments) ->
     promiseArray = []
     Object.keys(workers).forEach (worker) ->
+      message =
+        demand: demand
+        workerArguments: workerArguments
       promiseArray.push sendMessage(worker,message)
     Promise.all(promiseArray)
   
