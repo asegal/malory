@@ -6,12 +6,11 @@ malory = (config) ->
 
   sendMessage = (worker, message) ->
     new Promise (resolve, reject) ->
-      worker.addEventListener("message", listen)
-      worker.postMessage(message)
-      listen = (e) ->
+      worker.addEventListener 'message', (e) ->
         if (e.data.demand == message.demand)
-          worker.removeEventListener("message", listen)
+          worker.removeEventListener('message', this)
           resolve e.data
+      worker.postMessage(message)
   
   initializeWorker = (configEntry) ->
     worker = new Worker(configEntry.workerUrl)
@@ -35,8 +34,8 @@ malory = (config) ->
   # Send message to all workers, returns a promise, which will return an array containg each workers response as the index values
   machinations.demand = (message) ->
     promiseArray = []
-    for worker in workers
-      promiseArray.push message(worker,message)
+    Object.keys(workers).forEach (worker) ->
+      promiseArray.push sendMessage(worker,message)
     Promise.all(promiseArray)
   
   initialize config
