@@ -2,16 +2,20 @@ malory = (config) ->
   # Private
   machinations = {}
   workers = {}
-  budgetedWorkers = 10
+  budgetedWorkers = 5
 
   sendMessage = (worker, message) ->
     new Promise (resolve, reject) ->
-      worker.addEventListener 'message', (e) ->
+      worker.addEventListener "message", (e) ->
         if (e.data.demand == message.demand)
-          worker.removeEventListener('message', this)
+          worker.removeEventListener("message", this)
           resolve e.data
       worker.postMessage(message)
-  
+      listen = (e) ->
+        if (e.data.demand == message.demand)
+          worker.removeEventListener("message", this)
+          resolve e.data
+
   initializeWorker = (configEntry) ->
     worker = new Worker(configEntry.workerUrl)
     workers[configEntry.name + '-' + configEntry.counter] = worker
@@ -22,7 +26,7 @@ malory = (config) ->
       if data[configEntry.officiallyOutOfMemory]
         configEntry.counter++
         configEntry.workerArguments = data.workerArguments
-        initializeWorker(configEntry) unless configEntry.counter > configEntry.budgetedWorkers
+        initializeWorker(configEntry) unless configEntry.counter > configEntry.budgetWorkers
   
   initialize = (config) ->
     for configEntry, i in config
@@ -30,7 +34,7 @@ malory = (config) ->
       configEntry.budgetedWorkers = budgetedWorkers unless configEntry.budgetedWorkers
       configEntry.counter = 0
       initializeWorker configEntry
-  
+
   # Send message to all workers, returns a promise, which will return an array containg each workers response as the index values
   machinations.demand = (message) ->
     promiseArray = []
@@ -39,5 +43,5 @@ malory = (config) ->
     Promise.all(promiseArray)
   
   initialize config
-  
+
   return machinations
