@@ -1,13 +1,18 @@
+malory = require './malory'
+
 config = [
-  workerUrl: "worker.js"
-  initialDemand: "getCms"
-  budgetedWorkers: 50
-  officiallyOutOfMemory: "officiallyOutOfMemory"
-,
-  workerUrl: "worker.js"
-  initialDemand: "getLeads"
-  budgetedWorkers: 50
-  officiallyOutOfMemory: "officiallyOutOfMemory"
+  {
+    workerUrl: "worker.js"
+    initialDemand: "getCms"
+    budgetedWorkers: 50
+    officiallyOutOfMemory: "officiallyOutOfMemory"
+  }
+  {
+    workerUrl: "worker.js"
+    initialDemand: "getLeads"
+    budgetedWorkers: 50
+    officiallyOutOfMemory: "officiallyOutOfMemory"
+  }
 ]
 
 isisCeo = new malory(config)

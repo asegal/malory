@@ -14,10 +14,15 @@ module.exports = function(grunt) {
         }
       }
     },
+    clean: {
+      dist: {
+        src: ['malory.js']
+      }
+    },
     watch: {
       dev: {
         files: 'malory.coffee',
-        tasks: ['default'],
+        tasks: ['dev'],
         options: {
           interrupt: true
         }
@@ -34,7 +39,7 @@ module.exports = function(grunt) {
   });
 
   // Default task.
-  grunt.registerTask('dev', ['coffee', 'connect:dev', 'watch']);
-  grunt.registerTask('default', ['dev']);
+  grunt.registerTask('dev', ['default', 'watch:dev']);
+  grunt.registerTask('default', ['clean', 'coffee']);
 
 };

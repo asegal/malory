@@ -14,11 +14,11 @@
     {
       workerUrl: "worker.js",
       initialDemand: "getCms",
-      budgetedWorkers: 50,
+      budgetedWorkers: 2,
       officiallyOutOfMemory: "officiallyOutOfMemory"},{
       workerUrl: "worker.js",
       initialDemand: "getLeads",
-      budgetedWorkers: 50,
+      budgetedWorkers: 2,
       officiallyOutOfMemory: "officiallyOutOfMemory"
     }
   ];
@@ -30,13 +30,9 @@
      isisCeo = new malory(config);
 
      isisCeo.demand('gin').then(function(data) {
-       var datum, _i, _len, _results;
-       _results = [];
-       for (_i = 0, _len = data.length; _i < _len; _i++) {
-         datum = data[_i];
-         _results.push(console.log('... and freshly squeezed limes'));
+       for (i = 0; i < data.length; i++) {
+           console.log(data[i]);
          }
-         return _results;
        })
      })
 
