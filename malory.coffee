@@ -6,15 +6,13 @@ malory = (config) ->
 
   sendMessage = (worker, message) ->
     new Promise (resolve, reject) ->
-      worker.addEventListener "message", (e) ->
-        if (e.data.demand == message.demand)
-          worker.removeEventListener("message", this)
-          resolve e.data
-      worker.postMessage(message)
       listen = (e) ->
         if (e.data.demand == message.demand)
           worker.removeEventListener("message", this)
           resolve e.data
+      worker.addEventListener("message", listen)
+      worker.postMessage(message)
+
 
   initializeWorker = (configEntry) ->
     worker = new Worker(configEntry.workerUrl)
