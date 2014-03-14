@@ -36,7 +36,7 @@ malory = (config) ->
   # Send message to all workers, returns a promise, which will return an array containg each workers response as the index values
   machinations.demand = (demand, workerArguments) ->
     promiseArray = []
-    Object.keys(workers).forEach (worker) ->
+    for key, worker of workers
       message =
         demand: demand
         workerArguments: workerArguments

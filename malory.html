@@ -9,6 +9,7 @@
   <script type="text/javascript" charset="utf-8">
 
   var config;
+  var isisCeo;
 
   config = [
     {
@@ -25,16 +26,18 @@
 
    $(document).ready(function () {
 
-     var isisCeo;
-
      isisCeo = new malory(config);
+     setTimeout(doDemand,3000)
+     })
 
-     isisCeo.demand('gin').then(function(data) {
+   function doDemand(){
+     console.log('...demanding gin');
+     isisCeo.demand('gin','arg').then(function(data) {
        for (i = 0; i < data.length; i++) {
            console.log(data[i]);
          }
        })
-     })
+   }
 
  </script>
 </body>
