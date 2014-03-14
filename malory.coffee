@@ -8,7 +8,7 @@ malory = (config) ->
     new Promise (resolve, reject) ->
       listen = (e) ->
         if (e.data.demand == message.demand)
-          worker.removeEventListener("message", this)
+          e.currentTarget.removeEventListener("message", listen)
           resolve e.data
       worker.addEventListener("message", listen)
       worker.postMessage(message)
