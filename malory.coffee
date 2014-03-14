@@ -2,7 +2,7 @@ malory = (config) ->
   # Private
   machinations = {}
   workers = {}
-  budgetedWorkers = 5
+  budgetedWorkers = 50
 
   sendMessage = (worker, message) ->
     new Promise (resolve, reject) ->
