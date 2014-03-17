@@ -3,10 +3,11 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
   // Project configuration.
   grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
     coffee:{
       dist: {
         files: {
-          'malory.js' : ['malory.coffee']
+          'malory.js' : ['lib/malory.litcoffee']
         },
         options: {
           bare: true,
@@ -19,15 +20,6 @@ module.exports = function(grunt) {
         src: ['malory.js']
       }
     },
-    watch: {
-      dev: {
-        files: 'malory.coffee',
-        tasks: ['default'],
-        options: {
-          interrupt: true
-        }
-      }
-    },
     connect: {
       dev: {
         options: {
@@ -35,11 +27,31 @@ module.exports = function(grunt) {
           base: '.'
         }
       }
+    },
+    watch: {
+      dev: {
+        files: 'lib/malory.litcoffee',
+        tasks: ['default'],
+        options: {
+          interrupt: true
+        }
+      }
+    },
+    shell: {
+      docs: {
+         options: {
+           stdout: false,
+           stderr: true
+         },
+        command: 'PATH="node_modules/.bin:${PATH}" doc-n-toc docs/readme.md --css docs/my.less --title "malory v<%= pkg.version %>" > build/index.html'
+      }
     }
   });
 
   // Default task.
   grunt.registerTask('default', ['clean', 'coffee']);
-  grunt.registerTask('dev', ['default', 'watch:dev']);
+  grunt.registerTask('dev', ['default', 'watch']);
+  grunt.registerTask('serve', ['connect:dev', 'watch']);
+  grunt.registerTask('docs', ['shell:docs']);
 
 };
