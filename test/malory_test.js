@@ -38,6 +38,6 @@ asyncTest('sending a demand', function () {
       checkData();
     })
   }
-  setTimeout(doDemand,50) 
+  setTimeout(doDemand,100) 
 
 });
