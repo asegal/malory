@@ -13,12 +13,15 @@
   config = [
     {
       workerUrl: "worker.js",
-      initialDemand: "getCms",
-      budgetedWorkers: 2,
-      officiallyOutOfMemory: "officiallyOutOfMemory"},{
+      workerArguments: {'index':'notOOM'},
+      initialDemand: "loadIndex",
+      budgetedWorkers: 7,
+      officiallyOutOfMemory: "officiallyOutOfMemory"
+    },{
       workerUrl: "worker.js",
-      initialDemand: "getLeads",
-      budgetedWorkers: 2,
+      workerArguments: {'index':'OOM'},
+      initialDemand: "loadIndex",
+      budgetedWorkers: 5,
       officiallyOutOfMemory: "officiallyOutOfMemory"
     }
   ];

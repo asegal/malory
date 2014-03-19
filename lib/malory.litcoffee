@@ -4,7 +4,7 @@
       # Private
       machinations = {}
       workers = {}
-      budgetedWorkers = 50
+      budgetedWorkers = 20
 
       sendMessage = (worker, message) ->
         new Promise (resolve, reject) ->
@@ -25,7 +25,7 @@
           if data[configEntry.officiallyOutOfMemory]
             configEntry.counter++
             configEntry.workerArguments = data.workerArguments
-            initializeWorker(configEntry) unless configEntry.counter > configEntry.budgetWorkers
+            initializeWorker(configEntry) unless configEntry.counter >= configEntry.budgetedWorkers
       
       initialize = (config) ->
         for configEntry, i in config

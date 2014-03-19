@@ -30,7 +30,7 @@ malory = function(config) {
       if (data[configEntry.officiallyOutOfMemory]) {
         configEntry.counter++;
         configEntry.workerArguments = data.workerArguments;
-        if (!(configEntry.counter > configEntry.budgetWorkers)) {
+        if (!(configEntry.counter >= configEntry.budgetedWorkers)) {
           return initializeWorker(configEntry);
         }
       }
