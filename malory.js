@@ -4,7 +4,7 @@ malory = function(config) {
   var budgetedWorkers, initialize, initializeWorker, machinations, sendMessage, workers;
   machinations = {};
   workers = {};
-  budgetedWorkers = 50;
+  budgetedWorkers = 20;
   sendMessage = function(worker, message) {
     return new Promise(function(resolve, reject) {
       var listen;
