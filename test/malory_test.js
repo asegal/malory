@@ -1,4 +1,4 @@
-module('serialization', {
+module('demand', {
   setup: function () {
     var config = [
       {
