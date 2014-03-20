@@ -5,7 +5,9 @@ malory functions as a web worker manager
 * on demand, a promise is returned which when resolved will return an array containing each workers response to the demand
 
 ### malory is a function...
-takes a config item
+
+which takes a config item
+```javascript
 config = [
   {
     workerUrl: "worker.js"
@@ -15,9 +17,11 @@ config = [
     officiallyOutOfMemory: "officiallyOutOfMemory"
   }
 ]
-from which malory will instantiate a Worker(s) and
-return an object 
+```
+from which malory will instantiate a Worker(s) and return an object 
+```javascript
 isisCeo = new malory(config)
+```
 
     malory = (config) ->
       # Private
