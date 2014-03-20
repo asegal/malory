@@ -1,4 +1,8 @@
-## malory 
+malory 
+======
+# malory functions as web worker manager
+* will return an object from which a client is able to send messages to all workers.
+* on demand, a promise is returned which when reolved will return an array containing each workers response to the demand.
 
     malory = (config) ->
       # Private
@@ -35,7 +39,7 @@
           configEntry.counter = 0
           initializeWorker configEntry
 
-      # Send message to all workers, returns a promise, which will return an array containg each workers response as the index values
+# Send message to all workers, returns a promise, which will return an array containg each workers response as the index values
       machinations.demand = (demand, workerArguments) ->
         promiseArray = []
         for key, worker of workers
