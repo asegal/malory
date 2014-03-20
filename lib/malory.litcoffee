@@ -27,7 +27,7 @@ isisCeo = new malory(config)
       workers = {}
       budgetedWorkers = 50
 
-#### sendMessage
+##### sendMessage
 sendMessage is a private function that manages communication between malory and a worker
 
       sendMessage = (worker, message) ->
@@ -39,8 +39,8 @@ sendMessage is a private function that manages communication between malory and 
           worker.addEventListener("message", listen)
           worker.postMessage(message)
 
-#### initializeWorker
-initializeWorker is a private function that instantiates a web worker and handles the initalDemand. Bounded by budgetedWorkers a subsequent new worker will be instantiated if the original worker is officially out of memory
+##### initializeWorker
+initializeWorker is a private function that instantiates a web worker and handles the initialDemand. Bounded by budgetedWorkers a subsequent new worker will be instantiated if the original worker is officially out of memory
 
       initializeWorker = (configEntry) ->
         worker = new Worker(configEntry.workerUrl)
@@ -55,7 +55,7 @@ initializeWorker is a private function that instantiates a web worker and handle
             configEntry.workerArguments = data.workerArguments
             initializeWorker(configEntry) unless configEntry.counter >= configEntry.budgetedWorkers
       
-#### initialize
+##### initialize
 initialize is a private function which will parse the config array for configEntry object(s) and call initializeWorker with a configEntry object
 
       initialize = (config) ->
@@ -65,7 +65,7 @@ initialize is a private function which will parse the config array for configEnt
           configEntry.counter = 0
           initializeWorker configEntry
 
-#### machinations.demand
+##### machinations.demand
 machinations are public and returned to the client
 machinations.demand is a function that returns a Promise. Internally, sendMessage will post a message to all of malory's workers from which the workers will Resolve or Reject.
 
@@ -78,7 +78,7 @@ machinations.demand is a function that returns a Promise. Internally, sendMessag
           promiseArray.push sendMessage(worker,message)
         Promise.all(promiseArray)
 
-#### call initialize with the passed in config
+##### call initialize with the passed in config
 nuff said
 
       initialize config
