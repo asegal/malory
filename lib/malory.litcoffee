@@ -4,7 +4,7 @@ malory functions as a web worker manager
 * returns an object from which a client is able to send a message(aka demand) to all workers
 * on demand, a promise is returned which when reolved will return an array containing each workers response to the demand
 
-### malory is a function
+### malory is a function...
 pass a config item
 object = new malory(config)
 
@@ -14,7 +14,7 @@ object = new malory(config)
       workers = {}
       budgetedWorkers = 50
 
-## sendMessage
+#### sendMessage
 
       sendMessage = (worker, message) ->
         new Promise (resolve, reject) ->
@@ -25,7 +25,7 @@ object = new malory(config)
           worker.addEventListener("message", listen)
           worker.postMessage(message)
 
-## initializeWorker
+#### initializeWorker
 
       initializeWorker = (configEntry) ->
         worker = new Worker(configEntry.workerUrl)
@@ -40,7 +40,7 @@ object = new malory(config)
             configEntry.workerArguments = data.workerArguments
             initializeWorker(configEntry) unless configEntry.counter >= configEntry.budgetedWorkers
       
-## initialize
+#### initialize
 
       initialize = (config) ->
         for configEntry, i in config
@@ -49,7 +49,7 @@ object = new malory(config)
           configEntry.counter = 0
           initializeWorker configEntry
 
-## machinations
+#### machinations
 
       machinations.demand = (demand, workerArguments) ->
         promiseArray = []
@@ -60,10 +60,10 @@ object = new malory(config)
           promiseArray.push sendMessage(worker,message)
         Promise.all(promiseArray)
 
-## do the initialize with the config
+#### do the initialize with the config
 
       initialize config
 
-### which returns machinations from which demand is exposed to the client
+### ...which returns machinations from which demand is exposed to the client
 
       return machinations
