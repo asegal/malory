@@ -4,7 +4,7 @@
       # Private
       machinations = {}
       workers = {}
-      budgetedWorkers = 20
+      budgetedWorkers = 50
 
       sendMessage = (worker, message) ->
         new Promise (resolve, reject) ->
@@ -19,6 +19,7 @@
         worker = new Worker(configEntry.workerUrl)
         workers[configEntry.name + '-' + configEntry.counter] = worker
         message =
+          counter: configEntry.counter
           demand: configEntry.initialDemand
           workerArguments: configEntry.workerArguments
         sendMessage(worker, message).then (data) ->

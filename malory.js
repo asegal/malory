@@ -4,7 +4,7 @@ malory = function(config) {
   var budgetedWorkers, initialize, initializeWorker, machinations, sendMessage, workers;
   machinations = {};
   workers = {};
-  budgetedWorkers = 20;
+  budgetedWorkers = 50;
   sendMessage = function(worker, message) {
     return new Promise(function(resolve, reject) {
       var listen;
@@ -23,6 +23,7 @@ malory = function(config) {
     worker = new Worker(configEntry.workerUrl);
     workers[configEntry.name + '-' + configEntry.counter] = worker;
     message = {
+      counter: configEntry.counter,
       demand: configEntry.initialDemand,
       workerArguments: configEntry.workerArguments
     };
