@@ -1,14 +1,20 @@
 # malory 
 malory functions as web worker manager
-* instantiates Worker based on config settings
-* returns an object from which a client is able to send a message(aka demand) to all workers
-* on demand, a promise is returned which when reolved will return an array containing each workers response to the demand
+ instantiates Worker based on config settings
+ returns an object from which a client is able to send a message(aka demand) to all workers
+ on demand, a promise is returned which when reolved will return an array containing each workers response to the demand
+
+### malory function
+pass a config item
+object = new malory(config)
 
     malory = (config) ->
       # Private
       machinations = {}
       workers = {}
       budgetedWorkers = 50
+
+### ::sendMessage
 
       sendMessage = (worker, message) ->
         new Promise (resolve, reject) ->
@@ -18,6 +24,8 @@ malory functions as web worker manager
               resolve e.data
           worker.addEventListener("message", listen)
           worker.postMessage(message)
+
+### ::initializeWorker
 
       initializeWorker = (configEntry) ->
         worker = new Worker(configEntry.workerUrl)
@@ -32,6 +40,8 @@ malory functions as web worker manager
             configEntry.workerArguments = data.workerArguments
             initializeWorker(configEntry) unless configEntry.counter >= configEntry.budgetedWorkers
       
+### ::initialize
+
       initialize = (config) ->
         for configEntry, i in config
           configEntry.name = i unless configEntry.name
@@ -39,6 +49,7 @@ malory functions as web worker manager
           configEntry.counter = 0
           initializeWorker configEntry
 
+### ::machinations
       machinations.demand = (demand, workerArguments) ->
         promiseArray = []
         for key, worker of workers
@@ -47,7 +58,11 @@ malory functions as web worker manager
             workerArguments: workerArguments
           promiseArray.push sendMessage(worker,message)
         Promise.all(promiseArray)
-      
+
+### ::do the initialize with the config
+
       initialize config
+
+### ::return machinations from which demand is exposed to the client
 
       return machinations
