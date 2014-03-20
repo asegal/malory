@@ -36,22 +36,11 @@ module.exports = function(grunt) {
           interrupt: true
         }
       }
-    },
-    shell: {
-      docs: {
-         options: {
-           stdout: false,
-           stderr: true
-         },
-        command: 'PATH="node_modules/.bin:${PATH}" doc-n-toc docs/readme.md --css docs/my.less --title "malory v<%= pkg.version %>" > build/index.html'
-      }
     }
   });
 
-  // Default task.
   grunt.registerTask('default', ['clean', 'coffee']);
   grunt.registerTask('dev', ['default', 'watch']);
   grunt.registerTask('serve', ['connect:dev', 'watch']);
-  grunt.registerTask('docs', ['shell:docs']);
 
 };
