@@ -2,7 +2,7 @@
 malory functions as a web worker manager
 * instantiates Worker's based on client config settings
 * returns an object from which a client is able to send a message(aka demand) to all workers
-* on demand, a promise is returned which when resolved will return an array containing each workers response to the demand
+* on demand, a Promise is returned which when Resolve'd will return an array containing each workers response to the demand
 
 Example:
 ```coffee
@@ -28,6 +28,7 @@ isisCeo = new malory(config)
       budgetedWorkers = 50
 
 #### sendMessage
+sendMessage is a private function that manages communication between malory and a worker
 
       sendMessage = (worker, message) ->
         new Promise (resolve, reject) ->
@@ -39,6 +40,7 @@ isisCeo = new malory(config)
           worker.postMessage(message)
 
 #### initializeWorker
+initializeWorker is a private function that instantiates a web worker and handles the initalDemand. Bounded by budgetedWorkers a subsequent new worker will be instantiated if the original worker is officially out of memory
 
       initializeWorker = (configEntry) ->
         worker = new Worker(configEntry.workerUrl)
@@ -54,6 +56,7 @@ isisCeo = new malory(config)
             initializeWorker(configEntry) unless configEntry.counter >= configEntry.budgetedWorkers
       
 #### initialize
+initialize is a private function which will parse the config array for configEntry object(s) and call initializeWorker with a configEntry object
 
       initialize = (config) ->
         for configEntry, i in config
@@ -63,6 +66,8 @@ isisCeo = new malory(config)
           initializeWorker configEntry
 
 #### machinations.demand
+machinations are public and returned to the client
+machinations.demand is a function that returns a Promise. Internally, sendMessage will post a message to all of malory's workers from which the workers will Resolve or Reject.
 
       machinations.demand = (demand, workerArguments) ->
         promiseArray = []
@@ -74,6 +79,7 @@ isisCeo = new malory(config)
         Promise.all(promiseArray)
 
 #### call initialize with the passed in config
+nuff said
 
       initialize config
 
