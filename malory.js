@@ -53,6 +53,19 @@ malory = function(config) {
     }
     return _results;
   };
+  machinations.demand = function(demand, workerArguments) {
+    var key, message, promiseArray, worker;
+    promiseArray = [];
+    for (key in workers) {
+      worker = workers[key];
+      message = {
+        demand: demand,
+        workerArguments: workerArguments
+      };
+      promiseArray.push(sendMessage(worker, message));
+    }
+    return Promise.all(promiseArray);
+  };
   initialize(config);
   return machinations;
 };
