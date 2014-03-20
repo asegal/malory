@@ -4,7 +4,6 @@ malory
 * instantiates Worker based on config settings
 * returns an object from which a client is able to send a message(aka demand) to all workers.
 * on demand, a promise is returned which when reolved will return an array containing each workers response to the demand.
-======
 
         malory = (config) ->
           # Private
