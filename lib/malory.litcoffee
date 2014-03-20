@@ -1,12 +1,23 @@
 # malory 
 malory functions as a web worker manager
-* instantiates Worker based on config settings
+* instantiates Worker's based on client config settings
 * returns an object from which a client is able to send a message(aka demand) to all workers
-* on demand, a promise is returned which when reolved will return an array containing each workers response to the demand
+* on demand, a promise is returned which when resolved will return an array containing each workers response to the demand
 
 ### malory is a function...
-pass a config item
-object = new malory(config)
+takes a config item
+config = [
+  {
+    workerUrl: "worker.js"
+    initialDemand: "getCms"
+    workerArguments: index: "myCms.json"
+    budgetedWorkers: 50
+    officiallyOutOfMemory: "officiallyOutOfMemory"
+  }
+]
+from which malory will instantiate a Worker(s) and
+return an object 
+isisCeo = new malory(config)
 
     malory = (config) ->
       # Private
@@ -49,7 +60,7 @@ object = new malory(config)
           configEntry.counter = 0
           initializeWorker configEntry
 
-#### machinations
+#### machinations.demand
 
       machinations.demand = (demand, workerArguments) ->
         promiseArray = []
@@ -60,7 +71,7 @@ object = new malory(config)
           promiseArray.push sendMessage(worker,message)
         Promise.all(promiseArray)
 
-#### do the initialize with the config
+#### call initialize with the passed in config
 
       initialize config
 
