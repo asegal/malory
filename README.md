@@ -67,6 +67,7 @@ self.addEventListener "message", ((e) ->
     when 'bring me a gin and tonic' then itemFetched = 'gin and tonic'
     when 'bring me a monte cristo sandwich' then itemFetched = 'monte cristo'
 
+  # Respond to malory
   workerArguments.itemFetched = itemFetched
   returnMessage = {}
   returnMessage.demand = demand
