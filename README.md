@@ -28,19 +28,19 @@ maloryInstance.killAllWorkers()
 ```coffee
 workerConfig = [
   {
-    workerUrl: "scripts/hrEmployee.js"
-    name: "HumanResourcesEmployee"
+    workerUrl: "scripts/employee.js"
+    name: "hrEmployee"
     initialDemand: "initialize worker"
     budgetedWorkers: 10
     officiallyOutOfMemory: "we are officially out of memory"
-    workerArguments: {'memoryLimit': 700*1024}
+    workerArguments: {'memoryLimit': 700*1024 }
   },{
-    workerUrl: "scripts/fieldEmployee.js"
-    name: "FieldEmployee"
+    workerUrl: "scripts/employee.js"
+    name: "fieldEmployee"
     initialDemand: "initialize worker"
     budgetedWorkers: 10
     officiallyOutOfMemory: "we are officially out of memory"
-    workerArguments: {'memoryLimit': 700*1024}
+    workerArguments: {'memoryLimit': 700*1024 }
   }
 ]
 
@@ -53,7 +53,8 @@ maloryInstance.demand(demand, workerArguments).then (drinkArray) ->
     console.log 'I am having gin and tonic number ' + i
 ```
 
-##### Worker
+##### employee.js (the web worker)
+
 ```coffee
 self.addEventListener "message", ((e) ->
   
