@@ -38,6 +38,7 @@ A private function which manages communication between malory and a worker
 
 ##### initializeWorker (private)
 A private function which instantiates a web worker and handles the initialDemand. At the resolution of the initial demand promise, the user-specified 'officiallyOutOfMemory' return message property is checked.  If true, a subsequent worker is initialized with the same demand as the previous worker, but with the message having
+
 1. The counter property incremented by 1 and
 2. The workerArguments property assigned the value of the workerArguments property returned by the previous worker (allowing workers to thread initialization data through malory).
 
