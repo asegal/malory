@@ -10,12 +10,12 @@ An object returned after calling the malory function, which contains all the pub
 
       machinations = {}
 
-##### machinations (public, returned)
+##### machinations (private)
 An object which contains references to all workers which malory currently manages.  This object will use the 'name' property passed in the config element as part of the key (i.e. name_0, name_1, etc.).  If a name property is not passed for a particular config element, malory will use the config element's index in lieu of the name property (i.e 0_1, 0_2, etc.)
 
       workers = {}
 
-##### machinations (public, returned)
+##### budgetedWorkers (private)
 A limit on the number of workers a particular config element can spawn.  This value can be overridden by setting the 'budgetedWorkers' property on a config element.
 
       budgetedWorkers = 50
@@ -32,7 +32,7 @@ sendMessage is a private function which manages communication between malory and
           worker.addEventListener("message", listen)
           worker.postMessage(message)
 
-##### initializeWorker
+##### initializeWorker (private)
 initializeWorker is a private function which instantiates a web worker and handles the initialDemand. Bounded by budgetedWorkers a subsequent new worker will be instantiated if the original worker is officially out of memory
 
       initializeWorker = (configEntry) ->
@@ -48,7 +48,7 @@ initializeWorker is a private function which instantiates a web worker and handl
             configEntry.workerArguments = data.workerArguments
             initializeWorker(configEntry) unless configEntry.counter >= configEntry.budgetedWorkers
       
-##### initialize
+##### initialize (private)
 Initialize is a private function which will parse the config array and call initializeWorker on each element in the config array
 
       initialize = (config) ->
@@ -58,7 +58,7 @@ Initialize is a private function which will parse the config array and call init
           configEntry.counter = 0
           initializeWorker configEntry
 
-##### machinations.demand
+##### machinations.demand (public)
 machinations.demand is a function which returns a Promise. Internally, sendMessage will post a message to all of malory's workers and Resolve the demand.
 
       machinations.demand = (demand, workerArguments) ->
@@ -70,8 +70,8 @@ machinations.demand is a function which returns a Promise. Internally, sendMessa
           promiseArray.push sendMessage(worker,message)
         Promise.all(promiseArray)
 
-##### initialize call
-nuff said
+##### initialize call (private, first method called)
+The initial method called at malory instantiation
 
       initialize config
 
