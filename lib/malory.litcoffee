@@ -4,7 +4,9 @@ malory is a __web worker manager__ which handles instantiation, messaging, and d
 ### malory is a function...
 
     malory = (config) ->
-    
+
+### ...with the following member variables and objects...
+
 ##### machinations (public, returned)
 An object returned after calling the malory function, which contains all the public methods of the library and has access to the private members of the malory constructor closure.
 
@@ -19,6 +21,8 @@ An object which contains references to all workers which malory currently manage
 A limit on the number of workers a particular config element can spawn.  This value can be overridden by setting the 'budgetedWorkers' property on a config element.
 
       budgetedWorkers = 50
+
+### ...and the following methods...
 
 ##### sendMessage (private)
 sendMessage is a private function which manages communication between malory and a worker
