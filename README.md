@@ -44,7 +44,7 @@ workerConfig = [
   }
 ]
 
-maloryInstance = new malory(config)
+maloryInstance = new malory(workerConfig)
 
 demand = 'bring me a gin and tonic'
 workerArguments = {'ginBrand':'tanqueray'}
@@ -53,7 +53,7 @@ maloryInstance.demand(demand, workerArguments).then (drinkArray) ->
     console.log 'I am having gin and tonic number ' + i
 ```
 
-##### employee.js (the web worker)
+##### The web worker (employee.js)
 
 ```coffee
 self.addEventListener "message", ((e) ->
@@ -66,14 +66,17 @@ self.addEventListener "message", ((e) ->
 
   # Decide Which Course of Action to Take
   itemFetched = ''
+  officiallyOutOfMemory = false
   switch demand
+    when 'initialize worker' then officiallyOutOfMemory = Boolean(Math.round(Math.random()))
     when 'bring me a gin and tonic' then itemFetched = 'gin and tonic'
     when 'bring me a monte cristo sandwich' then itemFetched = 'monte cristo'
 
   # Respond to malory
-  workerArguments.itemFetched = itemFetched
+  if itemFetched then workerArguments.itemFetched = itemFetched
   returnMessage = {}
   returnMessage.demand = demand
+  returnMessage.officiallyOutOfMemory = officiallyOutOfMemory
   returnMessage.workerArguments = workerArguments
   self.postMessage returnMessage
 
