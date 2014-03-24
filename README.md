@@ -46,7 +46,9 @@ workerConfig = [
 
 maloryInstance = new malory(config)
 
-maloryInstance.demand('bring me a gin and tonic',{'ginBrand':'tanqueray'}).then (drinkArray) ->
+demand = 'bring me a gin and tonic'
+workerArguments = {'ginBrand':'tanqueray'}
+maloryInstance.demand(demand, workerArguments).then (drinkArray) ->
   for drink, i in drinkArray
     console.log 'I am having gin and tonic number ' + i
 ```
