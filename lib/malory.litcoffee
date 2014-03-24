@@ -1,33 +1,23 @@
 # malory 
-malory is a web worker manager
-* instantiates Worker's based on client config settings
-* returns an object from which a client is able to send a message(aka demand) to all workers
-* on demand, a Promise is returned which when Resolve'd will return an array containing each workers response to the demand
-
-Example:
-```coffee
-config = [
-  {
-    workerUrl: "worker.js"
-    initialDemand: "getCms"
-    workerArguments: index: "myCms.json"
-    budgetedWorkers: 50
-    officiallyOutOfMemory: "officiallyOutOfMemory"
-  }
-]
-
-isisCeo = new malory(config)
-```
+malory is a __web worker manager__ which handles instantiation, messaging, and destruction of a collection of web workers.
 
 ### malory is a function...
 
     malory = (config) ->
-      # Private
+    
+##### machinations (public, returned)
+An object returned after calling the malory function, which contains all the public methods of the library and has access to the private members of the malory constructor closure.
       machinations = {}
+
+##### machinations (public, returned)
+An object which contains references to all workers which malory currently manages.  This object will use the 'name' property passed in the config element as part of the key (i.e. name_0, name_1, etc.).  If a name property is not passed for a particular config element, malory will use the config element's index in lieu of the name property (i.e 0_1, 0_2, etc.)
       workers = {}
+
+##### machinations (public, returned)
+A limit on the number of workers a particular config element can spawn.  This value can be overridden by setting the 'budgetedWorkers' property on a config element.
       budgetedWorkers = 50
 
-##### sendMessage
+##### sendMessage (private)
 sendMessage is a private function which manages communication between malory and a worker
 
       sendMessage = (worker, message) ->
@@ -56,7 +46,7 @@ initializeWorker is a private function which instantiates a web worker and handl
             initializeWorker(configEntry) unless configEntry.counter >= configEntry.budgetedWorkers
       
 ##### initialize
-initialize is a private function which will parse the config array for configEntry object(s) and call initializeWorker with a configEntry object
+Initialize is a private function which will parse the config array and call initializeWorker on each element in the config array
 
       initialize = (config) ->
         for configEntry, i in config
@@ -66,7 +56,6 @@ initialize is a private function which will parse the config array for configEnt
           initializeWorker configEntry
 
 ##### machinations.demand
-machinations are public and returned to the client
 machinations.demand is a function which returns a Promise. Internally, sendMessage will post a message to all of malory's workers and Resolve the demand.
 
       machinations.demand = (demand, workerArguments) ->
@@ -78,11 +67,11 @@ machinations.demand is a function which returns a Promise. Internally, sendMessa
           promiseArray.push sendMessage(worker,message)
         Promise.all(promiseArray)
 
-##### call initialize with the passed in config
+##### initialize call
 nuff said
 
       initialize config
 
-### ...which returns machinations from which demand is exposed to the client
+### ...which returns a machinations object exposing the public API methods, demand and killAllWorkers
 
       return machinations
