@@ -74,4 +74,4 @@ Malory relies on on the [JavaScript Promise API](https://developer.mozilla.org/e
 
 ### Future Improvements
 * Shift to using plain callbacks or a cross-browser promise library, like [jQuery.deferred](http://api.jquery.com/category/deferred-object/)
-* Support for the [catiline](https://github.com/calvinmetcalf/catiline and [operative](https://github.com/padolsey/operative) libraries
+* Support for the [catiline](https://github.com/calvinmetcalf/catiline) and [operative](https://github.com/padolsey/operative) libraries
