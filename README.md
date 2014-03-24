@@ -26,7 +26,6 @@ maloryInstance.killAllWorkers()
 ##### Main Thread
 
 ```coffee
-initialworkerArguments = 'memoryLimit': 700*1024
 workerConfig = [
   {
     workerUrl: "scripts/hrEmployee.js"
@@ -34,38 +33,47 @@ workerConfig = [
     initialDemand: "initialize worker"
     budgetedWorkers: 10
     officiallyOutOfMemory: "we are officially out of memory"
-    workerArguments: initialworkerArguments
+    workerArguments: {'memoryLimit': 700*1024}
   },{
     workerUrl: "scripts/fieldEmployee.js"
     name: "FieldEmployee"
     initialDemand: "initialize worker"
     budgetedWorkers: 10
     officiallyOutOfMemory: "we are officially out of memory"
-    workerArguments: initialworkerArguments
+    workerArguments: {'memoryLimit': 700*1024}
   }
 ]
+
 maloryInstance = new malory(config)
+
 maloryInstance.demand('bring me a gin and tonic',{'ginBrand':'tanqueray'}).then (drinkArray) ->
   for drink, i in drinkArray
-    console.log 'I am having gin and tonic number 1'
+    console.log 'I am having gin and tonic number ' + i
 ```
 
 ##### Worker
 ```coffee
-  self.addEventListener "message", ((e) ->
+self.addEventListener "message", ((e) ->
+  
   # Extract Arguments
-  memoryLimit = e.data.workerArguments.memoryLimit
   demand = e.data.demand
   counter = e.data.counter
+  workerArguments = e.data.workerArguments
+  memoryLimit = workerArguments.memoryLimit
+
   # Decide Which Course of Action to Take
+  itemFetched = ''
   switch demand
-    when 'bring me a gin and tonic' then
-      self.postMessage generateReturnMessage(workerArguments, demand)
-    when 'bring me a monte cristo sandwich' then loadLookups(startId).then () ->
-      self.postMessage generateReturnMessage(workerArguments, demand)
-    when 'find names'
-      workerArguments.matches = findAllNames(workerArguments.nodeMetadata)
-      self.postMessage({'demand': demand, 'workerArguments': workerArguments})
+    when 'bring me a gin and tonic' then itemFetched = 'gin and tonic'
+    when 'bring me a monte cristo sandwich' then itemFetched = 'monte cristo'
+
+  workerArguments.itemFetched = itemFetched
+  returnMessage = {}
+  returnMessage.demand = demand
+  returnMessage.workerArguments = workerArguments
+  self.postMessage returnMessage
+
+
 ```
 
 ### Requirements

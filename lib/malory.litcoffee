@@ -12,7 +12,7 @@ An object returned after calling the malory function, which contains all the pub
 
       machinations = {}
 
-##### machinations (private)
+##### workers (private)
 An object which contains references to all workers which malory currently manages.  This object will use the 'name' property passed in the config element as part of the key (i.e. name_0, name_1, etc.).  If a name property is not passed for a particular config element, malory will use the config element's index in lieu of the name property (i.e 0_1, 0_2, etc.)
 
       workers = {}
@@ -39,8 +39,8 @@ A private function which manages communication between malory and a worker
 ##### initializeWorker (private)
 A private function which instantiates a web worker and handles the initialDemand. At the resolution of the initial demand promise, the user-specified 'officiallyOutOfMemory' return message property is checked.  If true, a subsequent worker is initialized with the same demand as the previous worker, but with the message having
 
-1. The counter property incremented by 1 and
-2. The workerArguments property assigned the value of the workerArguments property returned by the previous worker (allowing workers to thread initialization data through malory).
+1. The counter property incremented by 1
+2. The workerArguments property assigned the value of the previous worker's __returned__ workerArguments property (allowing workers to thread initialization data through malory)
 
 A subsequent worker will not be initialized if the number of current workers spawned from a particular config element is greater than the budgetedWorkers property (if omitted from the config, this value is set by malory).
 
