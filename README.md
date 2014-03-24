@@ -11,8 +11,8 @@ maloryInstance = new malory(config)
 
 ##### malory.demand
 ```coffee
-    maloryInstance.demand(demand, workerArguments).then (responseArray) ->
-      # Iterate over the response array, perhaps coalescing the results
+maloryInstance.demand(demand, workerArguments).then (responseArray) ->
+  # Iterate over the response array, perhaps coalescing the results
 ```
 
 ##### malory.killAllWorkers
