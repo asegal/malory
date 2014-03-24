@@ -25,7 +25,7 @@ A limit on the number of workers a particular config element can spawn.  This va
 ### ...and the following methods...
 
 ##### sendMessage (private)
-sendMessage is a private function which manages communication between malory and a worker
+A private function which manages communication between malory and a worker
 
       sendMessage = (worker, message) ->
         new Promise (resolve, reject) ->
@@ -37,7 +37,7 @@ sendMessage is a private function which manages communication between malory and
           worker.postMessage(message)
 
 ##### initializeWorker (private)
-initializeWorker is a private function which instantiates a web worker and handles the initialDemand. Bounded by budgetedWorkers a subsequent new worker will be instantiated if the original worker is officially out of memory
+A private function which instantiates a web worker and handles the initialDemand. At the resolution of the initial demand promise, the user-specified 'officiallyOutOfMemory' property is checked on the return message.  If true, a subsequent worker is initialized with the same demand as the previous worker, but with the message having (1) the counter property incremented by 1 and (2) the workerArguments property assigned the value of the workerArguments property returned by the previous worker (allowing workers to thread initialization data through malory).  A subsequent worker will not be initialized if the number of current workers spawned from a particular config element is greater than the budgetedWorkers property (if omitted from the config, this value is set by malory).
 
       initializeWorker = (configEntry) ->
         worker = new Worker(configEntry.workerUrl)
@@ -53,7 +53,7 @@ initializeWorker is a private function which instantiates a web worker and handl
             initializeWorker(configEntry) unless configEntry.counter >= configEntry.budgetedWorkers
       
 ##### initialize (private)
-Initialize is a private function which will parse the config array and call initializeWorker on each element in the config array
+A private function which will parse the config array and call initializeWorker on each element in the config array
 
       initialize = (config) ->
         for configEntry, i in config
@@ -63,7 +63,7 @@ Initialize is a private function which will parse the config array and call init
           initializeWorker configEntry
 
 ##### machinations.demand (public)
-machinations.demand is a function which returns a Promise. Internally, sendMessage will post a message to all of malory's workers and Resolve the demand.
+A function which returns a Promise. Internally, sendMessage will post a message to all of malory's workers and Resolve the demand.
 
       machinations.demand = (demand, workerArguments) ->
         promiseArray = []
@@ -74,11 +74,17 @@ machinations.demand is a function which returns a Promise. Internally, sendMessa
           promiseArray.push sendMessage(worker,message)
         Promise.all(promiseArray)
 
+##### machinations.killAllWorkers (public)
+A function which immediately terminates all workers.
+
+      machinations.killAllWorkers = () ->
+        for key, worker of workers
+          worker.terminate()
+          
 ##### initialize call (private, first method called)
 The initial method called at malory instantiation
 
       initialize config
 
-### ...which returns a machinations object exposing the public API methods, demand and killAllWorkers
-
+### ...which returns a machinations object exposing the public API methods
       return machinations
