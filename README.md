@@ -1,6 +1,6 @@
 malory
 ======
-malory is a __web worker manager__ which handles instantiation, messaging, and destruction of a collection of web workers.
+malory is a __web worker manager__, written in CoffeeScript which handles instantiation, messaging, and destruction of a collection of web workers.
 
 ### Public API
 
