@@ -1,8 +1,10 @@
 malory
 ======
-malory is a __web worker manager__ which handles instantiation, messaging, and destruction of a collection of web workers.
+malory is a __web worker manager__, written in CoffeeScript which handles instantiation, messaging, and destruction of a collection of web workers.
 
 ### Public API
+
+For full code documentation, including private methods and objects, see [malory.litcoffee](lib/malory.litcoffee)
 
 ##### Constructor
 ```coffee
@@ -44,7 +46,7 @@ workerConfig = [
   }
 ]
 
-maloryInstance = new malory(workerConfig)
+maloryInstance = new malory workerConfig
 
 demand = 'bring me a gin and tonic'
 workerArguments = {'ginBrand':'tanqueray'}
@@ -53,14 +55,13 @@ maloryInstance.demand(demand, workerArguments).then (drinkArray) ->
     console.log 'I am having gin and tonic number ' + i
 ```
 
-##### The web worker (employee.js)
+##### The Web Worker (employee.js)
 
 ```coffee
 self.addEventListener "message", ((e) ->
   
   # Extract Arguments
   demand = e.data.demand
-  counter = e.data.counter
   workerArguments = e.data.workerArguments
   memoryLimit = workerArguments.memoryLimit
 
