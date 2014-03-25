@@ -87,6 +87,32 @@ self.addEventListener "message", ((e) ->
 Malory relies on on the [JavaScript Promise API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise).  We suggest checking [browser compatibility]
 (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#Browser_compatibility) before use and use a [polyfill](https://github.com/slightlyoff/Promises) if necessary
 
+## NPM Install
+Get familiar with [node.js](http://nodejs.org/) if you haven't used it
+before, then
+
+* _$ npm install malory_
+
+## Contribute
+This plugin requires Grunt ~0.4.0
+
+If you haven't used [Grunt](http://gruntjs.com/) before, be sure to
+check out the [Getting
+Started](http://gruntjs.com/getting-started) guide, as it explains how
+to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as
+install and use Grunt plugins.
+
+1. Clone or fork the source, [github.com/glg/malory](http://github.com/glg/malory), then
+
+1. _$ npm install_
+ 
+    gets you the dependencies
+
+1. _$ grunt dev_
+
+    complies, fires up a webserver on localhost:8100, and
+    sets up a file watcher
+
 ### Future Improvements
 * Shift to using plain callbacks or a cross-browser promise library, like [jQuery.deferred](http://api.jquery.com/category/deferred-object/)
 * Support for the [catiline](https://github.com/calvinmetcalf/catiline) and [operative](https://github.com/padolsey/operative) libraries
