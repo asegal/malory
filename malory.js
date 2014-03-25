@@ -66,6 +66,15 @@ malory = function(config) {
     }
     return Promise.all(promiseArray);
   };
+  machinations.killAllWorkers = function() {
+    var key, worker, _results;
+    _results = [];
+    for (key in workers) {
+      worker = workers[key];
+      _results.push(worker.terminate());
+    }
+    return _results;
+  };
   initialize(config);
   return machinations;
 };

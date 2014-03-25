@@ -41,3 +41,24 @@ asyncTest('sending a demand', function () {
   setTimeout(doDemand,100) 
 
 });
+
+asyncTest('killing workers', function () {
+  expect( 1 );
+  var demand='gin';
+  var callbackCalled = false;
+  var isisCeo = this.isisCeo;
+
+  checkData = function() {
+    start()
+    equal(callbackCalled, false)
+  }
+  doKillAllWorkers = function () {
+    isisCeo.killAllWorkers()
+    isisCeo.demand(demand).then(function(data) {
+      callbackCalled = true;
+    })
+    checkData();
+  }
+  setTimeout(doKillAllWorkers,100) 
+
+});

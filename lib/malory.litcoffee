@@ -92,4 +92,5 @@ The initial method called at malory instantiation
       initialize config
 
 ### ...which returns a machinations object exposing the public API methods
+
       return machinations
