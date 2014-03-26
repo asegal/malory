@@ -2,10 +2,11 @@
   "name": "malory",
   "description": "web worker manager",
   "homepage": "https://github.com/glg/malory",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Andrew Collier, Daniel Griffis",
   "main": "malory",
   "license": "MIT",
+  "keywords": ["web worker", "web", "worker"],
   "contributors": [
     {
       "name": "Dan Griffis",
@@ -39,10 +40,5 @@
     "coffee-script": "~1.3.3",
     "load-grunt-tasks": "~0.3.0",
     "grunt-shell": "~0.6.4"
-  },
-  "keywords": [
-    "web worker",
-    "web",
-    "worker"
-  ]
+  }
 }
