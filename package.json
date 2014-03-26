@@ -2,10 +2,20 @@
   "name": "malory",
   "description": "WebWorker controller",
   "homepage": "https://github.com/glg/malory",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Andrew Collier, Daniel Griffis",
   "main": "malory",
   "license": "MIT",
+  "contributors": [
+    {
+      "name": "Dan Griffis",
+      "email": "dgriffis@glgroup.com"
+    },
+    {
+      "name": "Andrew Collier",
+      "email": "acollier@glgroup.com"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/glg/malory.git"
