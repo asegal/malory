@@ -55,7 +55,7 @@ maloryInstance.demand(demand, workerArguments).then (drinkArray) ->
     console.log 'I am having gin and tonic number ' + i
 ```
 
-##### The Web Worker (employee.js)
+##### The Web Worker (employee.coffee)
 
 ```coffee
 self.addEventListener "message", ((e) ->
@@ -80,7 +80,7 @@ self.addEventListener "message", ((e) ->
   returnMessage.officiallyOutOfMemory = officiallyOutOfMemory
   returnMessage.workerArguments = workerArguments
   self.postMessage returnMessage
-
+)
 
 ```
 

@@ -13,6 +13,16 @@ module.exports = function(grunt) {
           bare: true,
           sourceMap: false
         }
+      },
+      test: {
+        files: {
+          'example/employee.js' : ['example/employee.coffee'],
+          'example/example.js' : ['example/example.coffee'],
+        },
+        options: {
+          bare: true,
+          sourceMap: false
+        }
       }
     },
     clean: {
@@ -39,7 +49,8 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('default', ['clean', 'coffee']);
+  grunt.registerTask('default', ['clean', 'coffee:dist']);
+  grunt.registerTask('test', ['clean', 'coffee:test']);
   grunt.registerTask('dev', ['default', 'watch']);
   grunt.registerTask('serve', ['connect:dev', 'watch']);
 

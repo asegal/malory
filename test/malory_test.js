@@ -2,13 +2,13 @@ module('demand', {
   setup: function () {
     var config = [
       {
-        workerUrl: "../example/worker.js",
+        workerUrl: "worker.js",
         workerArguments: {'index':'notOOM'},
         initialDemand: "loadIndex",
         budgetedWorkers: 7,
         officiallyOutOfMemory: "officiallyOutOfMemory"
       },{
-        workerUrl: "../example/worker.js",
+        workerUrl: "worker.js",
         workerArguments: {'index':'OOM'},
         initialDemand: "loadIndex",
         budgetedWorkers: 5,
