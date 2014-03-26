@@ -88,13 +88,13 @@ self.addEventListener "message", ((e) ->
 Malory relies on the [JavaScript Promise API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise).  We suggest checking [browser compatibility]
 (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#Browser_compatibility) before use and use a [polyfill](https://github.com/slightlyoff/Promises) if necessary
 
-## NPM Install
+### NPM Install
 Get familiar with [node.js](http://nodejs.org/) if you haven't used it
 before, then
 
 * _$ npm install malory_
 
-## Contribute
+### Contribute
 This plugin requires Grunt ~0.4.0
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to
