@@ -27,11 +27,12 @@ A limit on the number of workers a particular config element can spawn.  This va
 ##### sendMessage (private)
 A private function which manages communication between malory and a worker
 
-      sendMessage = (worker, message) ->
+      sendMessage = (worker, message, workerName) ->
         new Promise (resolve, reject) ->
           listen = (e) ->
             if (e.data.demand == message.demand)
               e.currentTarget.removeEventListener("message", listen)
+              e.data.workerName = workerName if workerName?
               resolve e.data
           worker.addEventListener("message", listen)
           worker.postMessage(message)
@@ -68,15 +69,19 @@ A private function which will parse the config array and call initializeWorker o
           initializeWorker configEntry
 
 ##### machinations.demand (public)
-A function which returns a Promise. Internally, sendMessage will post a message to all of malory's workers and Resolve the demand.
+A function which returns a Promise. Internally, sendMessage will post a message to all of malory's workers and Resolve the demand. If an (optional) array of names is passed in as the "name" parameter, 
+only workers which were configured with one of those names will be queried.
 
-      machinations.demand = (demand, workerArguments) ->
+      machinations.demand = (demand, workerArguments, names) ->
         promiseArray = []
+        names ?= []
         for key, worker of workers
-          message =
-            demand: demand
-            workerArguments: workerArguments
-          promiseArray.push sendMessage(worker,message)
+          workerName = key.split('-')[0]
+          unless names.length > 0 and names.indexOf(workerName) is -1
+            message =
+              demand: demand
+              workerArguments: workerArguments
+            promiseArray.push sendMessage(worker,message,workerName)
         Promise.all(promiseArray)
 
 ##### machinations.killAllWorkers (public)

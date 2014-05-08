@@ -2,7 +2,7 @@
   "name": "malory",
   "description": "web worker manager",
   "homepage": "https://github.com/glg/malory",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Andrew Collier, Daniel Griffis",
   "main": "malory",
   "license": "MIT",

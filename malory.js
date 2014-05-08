@@ -5,12 +5,15 @@ malory = function(config) {
   machinations = {};
   workers = {};
   budgetedWorkers = 50;
-  sendMessage = function(worker, message) {
+  sendMessage = function(worker, message, workerName) {
     return new Promise(function(resolve, reject) {
       var listen;
       listen = function(e) {
         if (e.data.demand === message.demand) {
           e.currentTarget.removeEventListener("message", listen);
+          if (workerName != null) {
+            e.data.workerName = workerName;
+          }
           return resolve(e.data);
         }
       };
@@ -53,16 +56,22 @@ malory = function(config) {
     }
     return _results;
   };
-  machinations.demand = function(demand, workerArguments) {
-    var key, message, promiseArray, worker;
+  machinations.demand = function(demand, workerArguments, names) {
+    var key, message, promiseArray, worker, workerName;
     promiseArray = [];
+    if (names == null) {
+      names = [];
+    }
     for (key in workers) {
       worker = workers[key];
-      message = {
-        demand: demand,
-        workerArguments: workerArguments
-      };
-      promiseArray.push(sendMessage(worker, message));
+      workerName = key.split('-')[0];
+      if (!(names.length > 0 && names.indexOf(workerName) === -1)) {
+        message = {
+          demand: demand,
+          workerArguments: workerArguments
+        };
+        promiseArray.push(sendMessage(worker, message, workerName));
+      }
     }
     return Promise.all(promiseArray);
   };
