@@ -4,6 +4,9 @@ malory is a __web worker manager__ which handles instantiation, messaging, and d
 ### malory is a function...
 
     ((global) ->
+
+      isNode = module?.exports?
+
       malory = (config) ->
 
 ### ...with the following member variables and objects...
@@ -30,12 +33,20 @@ A private function which manages communication between malory and a worker
 
         sendMessage = (worker, message) ->
           new Promise (resolve, reject) ->
-            listen = (e) ->
-              if (e.data.demand == message.demand)
-                e.currentTarget.removeEventListener("message", listen)
-                resolve e.data
-            worker.addEventListener("message", listen)
-            worker.postMessage(message)
+            if isNode
+              listen = (m) ->
+                if (m.demand == message.demand)
+                  worker.removeListener("message", listen)
+                  resolve m
+              worker.on 'message', listen
+              worker.send message
+            else
+              listen = (e) ->
+                if (e.data.demand == message.demand)
+                  e.currentTarget.removeEventListener("message", listen)
+                  resolve e.data
+              worker.addEventListener("message", listen)
+              worker.postMessage(message)
 
 ##### initializeWorker (private)
 A private function which instantiates a web worker and handles the initialDemand. At the resolution of the initial demand promise, the user-specified 'officiallyOutOfMemory' return message property is checked.  If true, a subsequent worker is initialized with the same demand as the previous worker, but with the message having
@@ -46,7 +57,11 @@ A private function which instantiates a web worker and handles the initialDemand
 A subsequent worker will not be initialized if the number of current workers spawned from a particular config element is greater than the budgetedWorkers property (if omitted from the config, this value is set by malory).
 
         initializeWorker = (configEntry) ->
-          worker = new Worker(configEntry.workerUrl)
+          if isNode  #node - fork child process
+            worker = fork configEntry.workerUrl
+            worker.setMaxListeners 0 #unlimited listeners, default is otherwise 8
+          else #browser - create web worker
+            worker = new Worker(configEntry.workerUrl)
           workers[configEntry.name + '-' + configEntry.counter] = worker
           message =
             counter: configEntry.counter
@@ -85,7 +100,10 @@ A function which immediately terminates all workers.
 
         machinations.killAllWorkers = () ->
           for key, worker of workers
-            worker.terminate()
+            if isNode
+              worker.kil()
+            else
+              worker.terminate()
 
 ##### initialize call (private, first method called)
 The initial method called at malory instantiation
