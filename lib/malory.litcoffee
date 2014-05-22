@@ -120,4 +120,4 @@ The initial method called at malory instantiation
 
       global.malory = malory
 
-    )(this)
+    )(if typeof exports is "undefined" then this else exports)

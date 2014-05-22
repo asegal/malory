@@ -4,7 +4,7 @@
   "homepage": "https://github.com/glg/malory",
   "version": "0.0.5",
   "author": "Andrew Collier, Daniel Griffis",
-  "main": "malory",
+  "main": "malory.js",
   "license": "MIT",
   "keywords": [
     "web worker",
