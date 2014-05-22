@@ -7,6 +7,8 @@ malory is a __web worker manager__ which handles instantiation, messaging, and d
 
       isNode = module?.exports?
 
+      Promise = if isNode then require('es6-promise').Promise else window.Promise
+
       malory = (config) ->
 
 ### ...with the following member variables and objects...

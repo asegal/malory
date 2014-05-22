@@ -59,6 +59,6 @@ asyncTest('killing workers', function () {
     })
     checkData();
   }
-  setTimeout(doKillAllWorkers,100) 
+  setTimeout(doKillAllWorkers,500) 
 
 });

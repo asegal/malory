@@ -2,11 +2,17 @@
   "name": "malory",
   "description": "web worker manager",
   "homepage": "https://github.com/glg/malory",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Andrew Collier, Daniel Griffis",
   "main": "malory",
   "license": "MIT",
-  "keywords": ["web worker", "web", "worker"],
+  "keywords": [
+    "web worker",
+    "web",
+    "worker",
+    "fork",
+    "child process"
+  ],
   "contributors": [
     {
       "name": "Dan Griffis",
@@ -15,6 +21,10 @@
     {
       "name": "Andrew Collier",
       "email": "acollier@glgroup.com"
+    },
+    {
+      "name": "Amit Segal",
+      "email": "asegal@glgroup.com"
     }
   ],
   "repository": {
@@ -39,6 +49,7 @@
     "grunt-contrib-watch": "~0.5.3",
     "coffee-script": "~1.3.3",
     "load-grunt-tasks": "~0.3.0",
-    "grunt-shell": "~0.6.4"
+    "grunt-shell": "~0.6.4",
+    "es6-promise": "^1.0.0"
   }
 }
