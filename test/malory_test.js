@@ -15,9 +15,12 @@ module('demand', {
         officiallyOutOfMemory: "officiallyOutOfMemory"
       }
     ]
-  this.isisCeo = new malory(config)
+    malory(config).then(function(machinations){
+      this.isisCeo = machinations;
+    });
   }
 })
+
 
 asyncTest('sending a demand', function () {
   expect( 7 );
@@ -38,7 +41,7 @@ asyncTest('sending a demand', function () {
       checkData();
     })
   }
-  setTimeout(doDemand,100) 
+  setTimeout(doDemand,500) 
 
 });
 
