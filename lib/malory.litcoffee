@@ -118,8 +118,6 @@ The initial method called at malory instantiation
 
           initialize config
 
-
-
 ### malory can be used in the browser, or as a node.js module
 
       global.malory = malory
