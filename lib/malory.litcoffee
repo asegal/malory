@@ -60,7 +60,7 @@ A private function which instantiates a web worker and handles the initialDemand
 
 A subsequent worker will not be initialized if the number of current workers spawned from a particular config element is greater than the budgetedWorkers property (if omitted from the config, this value is set by malory).
 
-When a worker returns a message that is not "officiallyOutOfMemory', malory resolves with a machinations object exposing the public API methods
+When a worker returns a message that is not "officiallyOutOfMemory', malory will check for an initialDemandError and if present will reject with a machinations that includes the error otherwise malory resolves with a machinations object exposing the public API methods
 
           initializeWorker = (configEntry) ->
             if isNode  #node - fork child process
@@ -78,6 +78,9 @@ When a worker returns a message that is not "officiallyOutOfMemory', malory reso
                 configEntry.counter++
                 configEntry.workerArguments = data.workerArguments
                 initializeWorker(configEntry) unless configEntry.counter >= configEntry.budgetedWorkers
+              else if data[initialDemandError]
+                machinations.initialDemandError = data[initialDemandError].error
+                reject machinations
               else
                 resolve machinations
 
