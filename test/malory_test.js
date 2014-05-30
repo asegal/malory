@@ -15,15 +15,17 @@ module('demand', {
         officiallyOutOfMemory: "officiallyOutOfMemory"
       }
     ]
-  this.isisCeo = new malory(config)
+    malory(config).then(function(machinations){
+      this.isisCeo = machinations;
+    });
   }
 })
+
 
 asyncTest('sending a demand', function () {
   expect( 7 );
   var demand='gin';
   var callbackData = [];
-  var isisCeo = this.isisCeo;
 
   checkData = function() {
     start()
@@ -33,12 +35,12 @@ asyncTest('sending a demand', function () {
     }
   }
   doDemand = function () {
-    isisCeo.demand(demand).then(function(data) {
+    this.isisCeo.demand(demand).then(function(data) {
       callbackData = data;
       checkData();
     })
   }
-  setTimeout(doDemand,100) 
+  setTimeout(doDemand,500) 
 
 });
 
@@ -46,14 +48,13 @@ asyncTest('killing workers', function () {
   expect( 1 );
   var demand='gin';
   var callbackCalled = false;
-  var isisCeo = this.isisCeo;
 
   checkData = function() {
     start()
     equal(callbackCalled, false)
   }
   doKillAllWorkers = function () {
-    isisCeo.killAllWorkers()
+    this.isisCeo.killAllWorkers()
     isisCeo.demand(demand).then(function(data) {
       callbackCalled = true;
     })
