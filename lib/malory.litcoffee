@@ -79,8 +79,8 @@ When a worker returns a message that is not "officiallyOutOfMemory', malory will
                 configEntry.counter++
                 configEntry.workerArguments = data.workerArguments
                 initializeWorker(configEntry) unless configEntry.counter >= configEntry.budgetedWorkers
-              else if data[initialDemandError]
-                machinations.initialDemandError = data[initialDemandError].error
+              else if data[configEntry.initialDemandError]
+                machinations.initialDemandError = data[configEntry.initialDemandError].error
                 reject machinations
               else
                 resolve machinations
