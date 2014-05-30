@@ -54,8 +54,8 @@
             if (!(configEntry.counter >= configEntry.budgetedWorkers)) {
               return initializeWorker(configEntry);
             }
-          } else if (data[configEntry.initialDemandError]) {
-            machinations.initialDemandError = data[configEntry.initialDemandError].error;
+          } else if (data['initialDemandError'] != null) {
+            machinations.initialDemandError = data['initialDemandError'];
             return reject(machinations);
           } else {
             return resolve(machinations);
