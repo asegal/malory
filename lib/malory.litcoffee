@@ -113,7 +113,7 @@ A function which immediately terminates all workers.
           machinations.killAllWorkers = () ->
             for key, worker of workers
               if isNode
-                worker.kil()
+                worker.kill()
               else
                 worker.terminate()
 
