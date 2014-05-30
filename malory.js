@@ -97,7 +97,7 @@
         for (key in workers) {
           worker = workers[key];
           if (isNode) {
-            _results.push(worker.kil());
+            _results.push(worker.kill());
           } else {
             _results.push(worker.terminate());
           }
