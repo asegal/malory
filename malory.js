@@ -1,7 +1,8 @@
 (function(global) {
-  var Promise, isNode, malory;
+  var Promise, fork, isNode, malory;
   isNode = (typeof module !== "undefined" && module !== null ? module.exports : void 0) != null;
   Promise = isNode ? require('es6-promise').Promise : window.Promise;
+  fork = isNode ? require('child_process').fork : null;
   malory = function(config) {
     var budgetedWorkers, initialize, initializeWorker, machinations, sendMessage, workers;
     machinations = {};
